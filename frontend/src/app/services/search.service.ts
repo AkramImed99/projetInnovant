@@ -13,8 +13,8 @@ export class SearchService {
     /**
      * get data from Twitter API
      */
-    searchData(data : any) {
-        return this.httpClient.get('url'+ data);
+    searchData() {
+        return this.httpClient.get('http://localhost:3000');
     }
 
 }

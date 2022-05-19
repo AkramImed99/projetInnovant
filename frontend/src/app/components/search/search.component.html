@@ -23,8 +23,10 @@
   </form>
 
   <!-- Results -->
-  <div *ngFor="let tweet of tweets">
-    <div>Username : {{ tweet.user.name }}</div>
-    <div>Tweet content : {{ tweet.text }}</div>
+  <div *ngIf="tweets != null">
+    <div *ngFor="let tweet of tweets.data">
+      <div>Username : {{ tweet.author_id }}</div>
+      <div>Tweet content : {{ tweet.text }}</div>
+    </div>
   </div>
 </div>
