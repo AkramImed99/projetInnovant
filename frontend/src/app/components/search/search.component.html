@@ -1,0 +1,30 @@
+<div>
+  <!-- Search form -->
+  <form [formGroup]="searchForm">
+    <label>
+      <input
+        type="text"
+        placeholder="Recherche par hashtag ..."
+        [formControlName]="'searchField'"
+      />
+
+      <!-- recherche en cours -->
+      <!--<div *ngIf="loading">
+            <p class="search-message">Searching</p>
+            <div class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>-->
+    </label>
+    <button (click)="search()">Rechercher</button>
+  </form>
+
+  <!-- Results -->
+  <div *ngFor="let tweet of tweets">
+    <div>Username : {{ tweet.user.name }}</div>
+    <div>Tweet content : {{ tweet.text }}</div>
+  </div>
+</div>

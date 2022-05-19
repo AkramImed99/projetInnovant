@@ -1,0 +1,17 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Open Sans", Verdana, Geneva, Tahoma, sans-serif;
+    background: #eee;
+}
+
+.container {
+    text-align: center;
+}
+
+.logo {
+    width: 60%;
+    display: block;
+    margin: 40px auto 0px auto;
+    max-width: 340px;
+}
