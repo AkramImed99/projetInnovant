@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/index';
+import { BehaviorSubject, Observable } from 'rxjs/index';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -13,8 +13,8 @@ export class SearchService {
     /**
      * get data from Twitter API
      */
-    searchData() {
-        return this.httpClient.get('http://localhost:3000');
+    searchData(data: string) :Observable<any> {
+        return this.httpClient.get<any>(`http://localhost:3000/?q=${data}`);
     }
 
 }

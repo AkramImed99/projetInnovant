@@ -1,32 +1,40 @@
 <div>
-  <!-- Search form -->
-  <form [formGroup]="searchForm">
-    <label>
-      <input
-        type="text"
-        placeholder="Recherche par hashtag ..."
-        [formControlName]="'searchField'"
-      />
-
-      <!-- recherche en cours -->
-      <!--<div *ngIf="loading">
-            <p class="search-message">Searching</p>
-            <div class="lds-ellipsis">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>-->
-    </label>
-    <button (click)="search()">Rechercher</button>
-  </form>
+  <div class="search-input">
+    <!-- Search form -->
+    <div *ngIf="error" class="error-msg">
+      <i class="icon">&#9747;</i>{{ error }}
+    </div>
+    <form *ngIf="searchForm" [formGroup]="searchForm">
+      <label>
+        <input
+          type="text"
+          placeholder="Recherche par hashtag ..."
+          [formControlName]="'searchField'"
+          required
+        />
+      </label>
+      <button hidden="hidden" (click)="search()">Rechercher</button>
+    </form>
+  </div>
 
   <!-- Results -->
-  <div *ngIf="tweets != null">
-    <div *ngFor="let tweet of tweets.data">
-      <div>Username : {{ tweet.author_id }}</div>
-      <div>Tweet content : {{ tweet.text }}</div>
+  <div class="results" *ngIf="tweets">
+    <!--Résultats : {{ tweets.statuses.length }}-->
+    <!-- If there's no results -->
+    <div class="tweets-empty" *ngIf="isEmpty">No results found</div>
+
+    <div class="tweet-wrap" *ngFor="let tweet of tweets.statuses">
+      <div class="tweet-header">
+        <div>
+          <img class="avator" [attr.src]="tweet.user.profile_image_url" />
+          <div class="tweet-header-info">
+            {{ tweet.user.name }}
+            <span>@{{ tweet.user.screen_name }}</span>
+            <span>{{ tweet.user.created_at | date: "mediumDate" }}</span>
+            <p>{{ tweet.text }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
