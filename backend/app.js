@@ -5,17 +5,23 @@ require('dotenv').config()
 
 const token = process.env.TOKEN;
 
-const endpointURL = "https://api.twitter.com/2/tweets?ids=";
+// Endpoint to get tweets by keywords
+const endpointURL = "https://api.twitter.com/1.1/search/tweets.json?q=";
 
-async function getRequest() {
+// Full archive search 
+//const endpointURL = "https://api.twitter.com/2/tweets/search/all";
 
-    // These are the parameters for the API request
-    // specify Tweet IDs to fetch, and any additional fields that are required
-    // by default, only the Tweet ID and text are returned
+async function getRequest(queryP) {
+
     const params = {
-        "ids": "1278747501642657792,1255542774432063488", // Edit Tweet IDs to look up
-        "tweet.fields": "lang,author_id", // Edit optional query parameters here
-        "user.fields": "created_at" // Edit optional query parameters here
+        "expansions": "author_id",
+        "tweet.fields": "lang,author_id,public_metrics", // Edit optional query parameters here
+        "user.fields": "name,entities,username,created_at,profile_image_url", // Edit optional query parameters here
+        // "entities.field": "hashtags"
+
+        "q": `${queryP}`, // keywords
+        "count": "100"
+
     }
 
     // this is the HTTP header that adds bearer token authentication
@@ -38,17 +44,15 @@ const app = express()
 
 app.get('/', async (req, res) => {
     try {
-        // Make request
-        const response = await getRequest();
+
+        let queryParam = req.query.q
+        const response = await getRequest(queryParam);
         res.json(response)
 
     } catch (e) {
         console.log(e);
-
-        res.send("Hello")
+        res.send("Catch block")
     }
-
-
 })
 
 app.listen(3000, () => {

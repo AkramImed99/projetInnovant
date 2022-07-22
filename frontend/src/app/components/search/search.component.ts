@@ -13,6 +13,9 @@ export class SearchComponent implements OnInit {
   public searchForm: FormGroup;
   public error: string = '';
   public isEmpty: boolean = false;
+  page: number = 1;
+  countTweets: number = 0;
+  tweetsPerPage: number = 4;
 
 
   constructor(public formBuilder: FormBuilder, private searchService: SearchService) {
@@ -24,6 +27,7 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
   search() {
     if(this.searchForm.controls.searchField.value == '') {
       this.error = 'Veuillez renseigner tous les champs';
@@ -34,11 +38,10 @@ export class SearchComponent implements OnInit {
       .searchData(this.searchForm.controls.searchField.value)
       .subscribe({
         next: response => {
-          
-          this.tweets = response;
+          this.tweets = response;      
           console.log(this.tweets);
           // Check if array of tweets is empty
-          if(this.tweets.statuses.length === 0) {
+          if(this.tweets.length === 0) {
             this.isEmpty = true;
           }        
         },
@@ -48,11 +51,6 @@ export class SearchComponent implements OnInit {
         }
       })
     }
-
-    /*console.log('sleep');
-    setTimeout(() => {
-      // And any other code that should run only after 5s
-    }, 1000)*/
   }
 
 }
