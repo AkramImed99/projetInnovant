@@ -1,4 +1,8 @@
-<div>
+<div class="container">
+  <header>
+    <img class="logo" src="../assets/logo.png" />
+    <h1>Extraction des données de Twitter</h1>
+  </header>
   <div class="search-input">
     <!-- Search form -->
     <div *ngIf="error" class="error-msg">
@@ -20,10 +24,17 @@
   <!-- Results -->
   <div class="results" *ngIf="tweets">
     <!--Résultats : {{ tweets.statuses.length }}-->
+
     <!-- If there's no results -->
     <div class="tweets-empty" *ngIf="isEmpty">No results found</div>
 
-    <div class="tweet-wrap" *ngFor="let tweet of tweets.statuses">
+    <div
+      class="tweet-wrap"
+      *ngFor="
+        let tweet of tweets.statuses
+          | paginate: { itemsPerPage: 4, currentPage: page }
+      "
+    >
       <div class="tweet-header">
         <div>
           <img class="avator" [attr.src]="tweet.user.profile_image_url" />
@@ -35,6 +46,10 @@
           </div>
         </div>
       </div>
+    </div>
+    <!-- Pagination controls-->
+    <div>
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
 </div>

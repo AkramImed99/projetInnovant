@@ -1,20 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 
-
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-login-form',
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.css']
 })
-export class AppComponent {
-  title = 'Twitter Data extraction';
-  isLoggedIn : boolean = false;
-  errorMessage: any;
-  
+export class LoginFormComponent implements OnInit {
+
   loginForm = new FormGroup ({ email: new FormControl(), password: new FormControl()});
   signupForm = new FormGroup ({ firstName: new FormControl(), 
     lastName: new FormControl(), 
@@ -23,20 +19,20 @@ export class AppComponent {
     confirmPassword: new FormControl()
   });
 
+  isLoggedIn: boolean = false;
+  errorMessage: any;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
     private apiService: ApiService) { }
 
-  ngOnInit() :void {
+  ngOnInit() : void {
     this.initLoginForm();
     this.initSignUpForm();
-    this.isUserLoggedIn();  
+    this.isUserLogin();
   }
 
-
-  
   initLoginForm() {
     this.loginForm = this.formBuilder.group({
       email : ['', [Validators.required, Validators.email]],
@@ -62,10 +58,8 @@ export class AppComponent {
      
       if (res.status) {
         this.authService.setDataInLocalStorage('userData', JSON.stringify(res.data));  
-        this.authService.setDataInLocalStorage('token', res.token);       
-        this.router.navigate(['/search']).then(() => {
-          window.location.reload(); //Navigate and refresh page
-        });
+        this.authService.setDataInLocalStorage('token', res.token);  
+        this.router.navigate(['search']);
       }
     })
     
@@ -90,20 +84,9 @@ export class AppComponent {
     
   }
 
-  logout() {
-    this.isLoggedIn = false;
-    this.authService.clearStorage();
-    this.router.navigate([''])
-    .then(() => {
-      window.location.reload(); //Navigate and refresh page
-    });
-  }
-
-  isUserLoggedIn() {
-    if(this.authService.getUserDetails() != null) {
+  isUserLogin() {
+    if(this.authService.getUserDetails() != null){
         this.isLoggedIn = true;
     }
   }
-
-
 }

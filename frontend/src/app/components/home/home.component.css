@@ -1,0 +1,38 @@
+.toolbar {
+   background-color: #1DA1F2;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    background-color: #fff;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidenav {
+    user-select: none;
+    width: 200px;
+}
+
+.fullwidth {
+    width : 100%;
+}
+
+mat-list-item {
+    cursor: pointer;
+}
+
+mat-list a {
+    text-decoration: none;
+} 
+
+mat-list-item:hover {
+    background-color: #f0f2f5;
+}

@@ -1,15 +1,41 @@
-
+const mysql = require('mysql');
 const needle = require('needle');
-const express = require('express')
+const express = require('express');
+const indexRouter = require('./routes/index');
+const cors = require('cors');
+
 require('dotenv').config()
+
+
+const app = express()
+
+
+const pool = mysql.createPool({
+    connectionLimit: 10,
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'projet_innovant'
+})
 
 const token = process.env.TOKEN;
 
 // Endpoint to get tweets by keywords
 const endpointURL = "https://api.twitter.com/1.1/search/tweets.json?q=";
 
-// Full archive search 
-//const endpointURL = "https://api.twitter.com/2/tweets/search/all";
+app.use(cors());
+app.use(express.json());
+app.use('/', indexRouter);
+
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+    res.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
+    if (req.method == "OPTIONS") {
+        return res.sendStatus(200);
+    }
+    next();
+});
+
 
 async function getRequest(queryP) {
 
@@ -39,7 +65,7 @@ async function getRequest(queryP) {
     }
 }
 
-const app = express()
+
 
 
 app.get('/', async (req, res) => {
@@ -54,6 +80,9 @@ app.get('/', async (req, res) => {
         res.send("Catch block")
     }
 })
+
+
+
 
 app.listen(3000, () => {
     console.log("Hello");

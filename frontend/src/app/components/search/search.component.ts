@@ -17,6 +17,8 @@ export class SearchComponent implements OnInit {
   countTweets: number = 0;
   tweetsPerPage: number = 4;
 
+  pageOfItems: any;
+
 
   constructor(public formBuilder: FormBuilder, private searchService: SearchService) {
     this.searchForm = this.formBuilder.group({
@@ -27,6 +29,11 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  onChangePage(pageOfItems: Array<any>) {
+    // update current page of items
+    this.pageOfItems = pageOfItems;
+}
 
   search() {
     if(this.searchForm.controls.searchField.value == '') {

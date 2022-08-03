@@ -1,4 +1,19 @@
-.seauch-input {
+.container {
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+}
+
+.logo {
+  width: 60%;
+  display: block;
+  margin: 40px auto 0px auto;
+  max-width: 340px;
+}
+
+.search-input {
     text-align: center;
 }
 
