@@ -54,9 +54,10 @@ export class LoginFormComponent implements OnInit {
     console.log('Your form data : ', this.loginForm.value);
    
     this.apiService.postTypeRequest('user/login', this.loginForm.value).subscribe((res: any) => {
-     console.log(res);
+     console.log('response',res);
      
-      if (res.status) {
+     if (res.status) {
+      
         this.authService.setDataInLocalStorage('userData', JSON.stringify(res.data));  
         this.authService.setDataInLocalStorage('token', res.token);  
         this.router.navigate(['search']);
@@ -85,7 +86,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   isUserLogin() {
-    if(this.authService.getUserDetails() != null){
+    if(this.authService.getUserDetails() != null) {
         this.isLoggedIn = true;
     }
   }

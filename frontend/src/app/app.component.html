@@ -99,7 +99,11 @@
       <button mat-icon-button>
         <mat-icon>menu</mat-icon>
       </button>
-      <h1 class="toolbar-title">Menu</h1>
+      <h1 class="toolbar-title"></h1>
+
+      <h4 class="username">
+        {{ userData[0].first_name }} {{ userData[0].last_name }}
+      </h4>
     </mat-toolbar>
 
     <mat-sidenav-container class="container" autosize>

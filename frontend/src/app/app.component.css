@@ -1,5 +1,10 @@
 .toolbar {
   background-color: #1DA1F2;
+  justify-content: space-between;
+}
+
+.toolbar .username {
+   font-size: 16px;
 }
 
 .container {

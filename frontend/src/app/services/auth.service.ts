@@ -8,12 +8,10 @@ export class AuthService {
   constructor() { }
   
    getUserDetails() {
-    if(localStorage.getItem('userData')){
-
+    if(localStorage.getItem('userData')) {
       return localStorage.getItem('userData')
-
-    }else{
-      return null
+    } else {
+      return null;
     }
     
   }

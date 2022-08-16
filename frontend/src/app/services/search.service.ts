@@ -17,4 +17,8 @@ export class SearchService {
         return this.httpClient.get<any>(`http://localhost:3000/?q=${data}`);
     }
 
+    storeKeywordsAndTweets(keyword: string, tweets: any) {
+        return this.httpClient.post<any>(`http://localhost:3000/keyword/store_keywords/?keyword=${keyword}`, tweets);
+    }
+
 }

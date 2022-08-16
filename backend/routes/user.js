@@ -27,6 +27,7 @@ router.post('/register', async function (req, res, next) {
                 con.query(
                     sql, [firstName, lastName, email, hashed_password],
                     (err, result, fields) => {
+                        console.log(result);
                         if (err) {
                             res.send({ status: 0, data: err });
                         } else {
@@ -45,7 +46,6 @@ router.post('/register', async function (req, res, next) {
 /* Login route */
 router.post('/login', async function (req, res, next) {
     try {
-        console.log('here');
         let { email, password } = req.body;
 
         const hashed_password = md5(password.toString())
@@ -53,7 +53,7 @@ router.post('/login', async function (req, res, next) {
         con.query(
             sql, [email, hashed_password],
             function (err, result, fields) {
-                if (err) {
+                if (result.length === 0) {
                     res.send({ status: 0, data: err });
                 } else {
                     let token = jwt.sign({ data: result }, 'secret')

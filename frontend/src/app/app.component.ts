@@ -14,6 +14,7 @@ export class AppComponent {
   title = 'Twitter Data extraction';
   isLoggedIn : boolean = false;
   errorMessage: any;
+  userData: any;
   
   loginForm = new FormGroup ({ email: new FormControl(), password: new FormControl()});
   signupForm = new FormGroup ({ firstName: new FormControl(), 
@@ -33,6 +34,9 @@ export class AppComponent {
     this.initLoginForm();
     this.initSignUpForm();
     this.isUserLoggedIn();  
+    
+    this.userData = this.authService.getUserDetails();
+    this.userData = JSON.parse(this.userData);
   }
 
 
@@ -61,10 +65,13 @@ export class AppComponent {
      console.log(res);
      
       if (res.status) {
-        this.authService.setDataInLocalStorage('userData', JSON.stringify(res.data));  
+        this.authService.setDataInLocalStorage('response', JSON.stringify(res));
+        this.authService.setDataInLocalStorage('status', JSON.stringify(res.status));
+        this.authService.setDataInLocalStorage('userData', JSON.stringify(res.data));
         this.authService.setDataInLocalStorage('token', res.token);       
+       // this.userData = res.data;
         this.router.navigate(['/search']).then(() => {
-          window.location.reload(); //Navigate and refresh page
+          window.location.reload();
         });
       }
     })
@@ -77,11 +84,15 @@ export class AppComponent {
     console.log(this.signupForm.value);
     
     this.apiService.postTypeRequest('user/register', this.signupForm.value).subscribe((res: any) => {
-      if (res.status) { 
-        console.log(res)
+      if (res.status) {
+        
+        this.authService.setDataInLocalStorage('status', JSON.stringify(res.status));
         this.authService.setDataInLocalStorage('userData', JSON.stringify(res.data));  
         this.authService.setDataInLocalStorage('token', res.token);  
-        this.router.navigate(['']);
+        this.userData =  res.data;
+        this.router.navigate(['/search']).then(() => {
+          window.location.reload();
+        });
       } else { 
         console.log(res)
         alert(res.msg)
@@ -91,6 +102,8 @@ export class AppComponent {
   }
 
   logout() {
+    console.log('logout');
+    
     this.isLoggedIn = false;
     this.authService.clearStorage();
     this.router.navigate([''])
