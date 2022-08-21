@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { SearchService } from 'src/app/services/search.service';
 
 @Component({
@@ -17,11 +18,11 @@ export class SearchComponent implements OnInit {
   page: number = 1;
   countTweets: number = 0;
   tweetsPerPage: number = 4;
-
   pageOfItems: any;
+  userData: any;
 
 
-  constructor(public formBuilder: FormBuilder, private searchService: SearchService, private apiService: ApiService) {
+  constructor(public formBuilder: FormBuilder, private searchService: SearchService, private authService: AuthService) {
     this.searchForm = this.formBuilder.group({
       searchField : new FormControl('', Validators.required)
     });
@@ -52,7 +53,9 @@ export class SearchComponent implements OnInit {
           console.log(this.tweets);
           
           // store keywords in db
-          this.searchService.storeKeywordsAndTweets(this.searchForm.controls.searchField.value, this.tweets.statuses).subscribe((res: any) => {
+          this.userData = this.authService.getUserDetails();
+          this.userData = JSON.parse(this.userData);
+          this.searchService.storeKeywordsAndTweets(this.searchForm.controls.searchField.value, this.tweets.statuses, this.userData[0].id).subscribe((res: any) => {
             console.log('response', res);
 
           })

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs/index';
+import { Observable } from 'rxjs/index';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -13,12 +13,12 @@ export class SearchService {
     /**
      * get data from Twitter API
      */
-    searchData(data: string) :Observable<any> {
+    searchData(data: string) : Observable<any> {
         return this.httpClient.get<any>(`http://localhost:3000/?q=${data}`);
     }
 
-    storeKeywordsAndTweets(keyword: string, tweets: any) {
-        return this.httpClient.post<any>(`http://localhost:3000/keyword/store_keywords/?keyword=${keyword}`, tweets);
+    storeKeywordsAndTweets(keyword: string, tweets: any, userId: number) {
+        return this.httpClient.post<any>(`http://localhost:3000/keyword/store_keywords/?userId=${userId}&keyword=${keyword}`, tweets);
     }
 
 }

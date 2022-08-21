@@ -8,12 +8,7 @@ export class AuthService {
   constructor() { }
   
    getUserDetails() {
-    if(localStorage.getItem('userData')) {
-      return localStorage.getItem('userData')
-    } else {
-      return null;
-    }
-    
+      return localStorage.getItem('userData');
   }
 
   setDataInLocalStorage(variableName: any, data: any) {

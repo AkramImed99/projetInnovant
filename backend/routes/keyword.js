@@ -16,15 +16,18 @@ const con = mysql.createConnection({
 /* Store keywords */
 router.post('/store_keywords', urlencodedParser, function (req, res) {
     try {
-
+        let userId = req.query.userId;
         let keyword = req.query.keyword;
         let tweets = req.body;
+
+        console.log(req.query);
 
         // insert in db
         //check if keyword exists in db
         const checkKeyword = `SELECT * FROM keywords WHERE keyword = ?`;
         con.query(checkKeyword, keyword, (err, result, fields) => {
 
+            // Check if keyword exists
             if (!result.length) {
                 const insertKeyword = `INSERT INTO keywords (keyword) VALUES ( ? )`;
                 con.query(
@@ -39,10 +42,14 @@ router.post('/store_keywords', urlencodedParser, function (req, res) {
                             con.query(keywordIdQuery, keyword, (err, result, fields) => {
                                 keywordId = result[0].id;
 
+                                // Store keyword id and user id in intermediate table (keywords_users)
+                                const storeUserKeywordIds = `INSERT INTO keywords_users (keyword_id, user_id) VALUES (?, ?)`;
+                                con.query(storeUserKeywordIds, [keywordId, userId]);
+
                                 // Store tweets in database
                                 tweets.forEach(tweet => {
-                                    const insertTweets = `INSERT INTO results (ref_id, tweet_content, author_username, creation_date, keyword_id) VALUES (?, ?, ?, ?, ?)`;
-                                    con.query(insertTweets, [tweet.id, tweet.text, tweet.user.name, tweet.user.created_at, keywordId]);
+                                    const insertTweets = `INSERT INTO results (ref_id, tweet_content, author_username, creation_date, keyword_id, user_id) VALUES (?, ?, ?, ?, ?, ?)`;
+                                    con.query(insertTweets, [tweet.id, tweet.text, tweet.user.name, tweet.user.created_at, keywordId, userId]);
 
                                 });
                             });
@@ -58,13 +65,16 @@ router.post('/store_keywords', urlencodedParser, function (req, res) {
                 let keywordId;
                 const keywordIdQuery = `SELECT * FROM keywords WHERE keyword = ?`;
                 con.query(keywordIdQuery, keyword, (err, result, fields) => {
-                    console.log('id keyword : ', result[0].id);
                     keywordId = result[0].id;
+
+                    // Store keyword id and user id in intermediate table (keywords_users)
+                    const storeUserKeywordIds = `INSERT INTO keywords_users (keyword_id, user_id) VALUES (?, ?)`;
+                    con.query(storeUserKeywordIds, [keywordId, userId]);
 
                     // Store tweets in database
                     tweets.forEach(tweet => {
-                        const insertTweets = `INSERT INTO results (ref_id, tweet_content, author_username, creation_date, keyword_id) VALUES (?, ?, ?, ?, ?)`;
-                        con.query(insertTweets, [tweet.id, tweet.text, tweet.user.name, tweet.user.created_at, keywordId]);
+                        const insertTweets = `INSERT INTO results (ref_id, tweet_content, author_username, creation_date, keyword_id, user_id) VALUES (?, ?, ?, ?, ?, ?)`;
+                        con.query(insertTweets, [tweet.id, tweet.text, tweet.user.name, tweet.user.created_at, keywordId, userId]);
 
                     });
                 });
