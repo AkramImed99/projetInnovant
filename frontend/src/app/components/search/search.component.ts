@@ -50,14 +50,13 @@ export class SearchComponent implements OnInit {
       .subscribe({
         next: response => {
           this.tweets = response;      
-          console.log(this.tweets);
           
           // store keywords in db
           this.userData = this.authService.getUserDetails();
           this.userData = JSON.parse(this.userData);
           this.searchService.storeKeywordsAndTweets(this.searchForm.controls.searchField.value, this.tweets.statuses, this.userData[0].id).subscribe((res: any) => {
             console.log('response', res);
-
+            // ADD NOTIFICATION
           })
 
 

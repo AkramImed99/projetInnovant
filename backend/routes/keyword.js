@@ -19,6 +19,8 @@ router.post('/store_keywords', urlencodedParser, function (req, res) {
         let userId = req.query.userId;
         let keyword = req.query.keyword;
         let tweets = req.body;
+        let search_date = new Date().toLocaleDateString();
+        console.log(search_date);
 
         console.log(req.query);
 
@@ -31,7 +33,7 @@ router.post('/store_keywords', urlencodedParser, function (req, res) {
             if (!result.length) {
                 const insertKeyword = `INSERT INTO keywords (keyword) VALUES ( ? )`;
                 con.query(
-                    insertKeyword, keyword, (err, result, fields) => {
+                    insertKeyword, [keyword], (err, result, fields) => {
                         if (err) {
                             res.send({ status: 0, data: err });
                         } else {

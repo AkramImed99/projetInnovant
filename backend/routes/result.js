@@ -13,17 +13,12 @@ const con = mysql.createConnection({
 router.get('/results', function (req, res) {
     try {
         let userId = req.query.userId;
-        let keywords;
-
-
-
 
         // get results of each keyword
 
-
-        const getResultsQuery = `SELECT keywords.keyword, results.id, results.tweet_content FROM keywords 
+        const getResultsQuery = `SELECT keywords.keyword, keywords.search_date, results.id, results.tweet_content FROM keywords 
                     INNER JOIN keywords_users ON keywords.id = keywords_users.keyword_id
-                    RIGHT JOIN results ON keywords.id = results.keyword_id
+                    INNER JOIN results ON keywords.id = results.keyword_id
                     WHERE keywords_users.user_id = ?`;
 
 

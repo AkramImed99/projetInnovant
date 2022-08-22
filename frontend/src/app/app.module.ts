@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -7,11 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { SearchComponent } from './components/search/search.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { JwPaginationModule } from 'jw-angular-pagination';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { LoginFormComponent } from './components/login-form/login-form.component';
 import { HomeComponent } from './components/home/home.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,7 +25,6 @@ import { HistoryComponent } from './components/history/history.component';
   declarations: [
     AppComponent,
     SearchComponent,
-    LoginFormComponent,
     HomeComponent,
     HistoryComponent
   ],
@@ -39,7 +36,6 @@ import { HistoryComponent } from './components/history/history.component';
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
-    JwPaginationModule,
     MatButtonModule,
     MatInputModule,
     MatSidenavModule,
@@ -52,7 +48,10 @@ import { HistoryComponent } from './components/history/history.component';
     AuthModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 
 export class AppModule { }

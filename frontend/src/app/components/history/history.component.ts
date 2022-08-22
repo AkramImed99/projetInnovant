@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ResultService } from 'src/app/services/result.service';
-//import * as _ from 'lodash';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-history',
@@ -12,6 +12,7 @@ export class HistoryComponent implements OnInit {
 
   userData: any;
   results :any;
+  groupedResults: any;
 
   constructor(private resultService: ResultService, private authService: AuthService) { }
 
@@ -24,14 +25,10 @@ export class HistoryComponent implements OnInit {
     this.userData = JSON.parse(this.userData);
   
     this.resultService.getResults(this.userData[0].id).subscribe((res: any) => {
-      console.log(res);
-
-      //var grouped = _.mapValues(_.groupBy(cars, 'make'),
-     // clist => clist.map(car => _.omit(car, 'make')));
-      
-      this.results = res;
-      
-    })
+      this.results = res.data;
+      this.groupedResults = _.groupBy(this.results, result => result.keyword);
+      this.groupedResults = _.values(this.groupedResults);
+    });
 
   }
 
