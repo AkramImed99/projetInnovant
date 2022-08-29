@@ -1,8 +1,8 @@
 <div class="history-cards">
-  <h2>Historique des recherches</h2>
-  <div *ngIf="results && groupedResults">
-    <div class="cards-list" *ngFor="let result of groupedResults">
-      <mat-card class="card">
+  <h1>Historique des recherches</h1>
+  <div class="cards-list" *ngIf="results && groupedResults">
+    <div class="card" *ngFor="let result of groupedResults">
+      <mat-card>
         <mat-card-title>{{ result[0].keyword }}</mat-card-title>
         <mat-card-subtitle>
           {{ result[0].search_date | date: "dd/MM/yyyy" }}
