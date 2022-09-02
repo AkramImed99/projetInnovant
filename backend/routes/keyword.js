@@ -20,11 +20,9 @@ router.post('/store_keywords', urlencodedParser, function (req, res) {
         let keyword = req.query.keyword;
         let tweets = req.body;
         let search_date = new Date().toLocaleDateString();
-        console.log(search_date);
-
-        console.log(req.query);
 
         // insert in db
+
         //check if keyword exists in db
         const checkKeyword = `SELECT * FROM keywords WHERE keyword = ?`;
         con.query(checkKeyword, keyword, (err, result, fields) => {
@@ -93,18 +91,19 @@ router.post('/store_keywords', urlencodedParser, function (req, res) {
 router.delete("/delete_keyword", (req, res) => {
     try {
         let keywordId = req.query.keywordId;
-        console.log(keywordId);
+        console.log("Keyword to delete : ", keywordId);
 
         const deleteKeywordQuery = `DELETE FROM keywords WHERE keywords.id = ?`;
 
+        // Delete keyword
         con.query(deleteKeywordQuery, keywordId, (err, result, fields) => {
 
-            /*  const deleteResultsQuery = `DELETE FROM results WHERE keyword_id = ?`
-              con.query(deleteResultsQuery, keywordId, (err, result, fields) => {
-                  console.log('delete results', result);
-              });*/
+            const deleteResultsQuery = `DELETE FROM results WHERE keyword_id = ?`
+            // Delete results of keyword
+            con.query(deleteResultsQuery, keywordId, (err, result, fields) => {
+                res.send({ status: 1, data: result });
+            });
 
-            res.send({ status: 1, data: result });
         });
     } catch (error) {
         res.status(400).json({ message: error.message });
