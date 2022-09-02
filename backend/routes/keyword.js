@@ -90,4 +90,25 @@ router.post('/store_keywords', urlencodedParser, function (req, res) {
     }
 });
 
+router.delete("/delete_keyword", (req, res) => {
+    try {
+        let keywordId = req.query.keywordId;
+        console.log(keywordId);
+
+        const deleteKeywordQuery = `DELETE FROM keywords WHERE keywords.id = ?`;
+
+        con.query(deleteKeywordQuery, keywordId, (err, result, fields) => {
+
+            /*  const deleteResultsQuery = `DELETE FROM results WHERE keyword_id = ?`
+              con.query(deleteResultsQuery, keywordId, (err, result, fields) => {
+                  console.log('delete results', result);
+              });*/
+
+            res.send({ status: 1, data: result });
+        });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
 module.exports = router;

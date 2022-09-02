@@ -21,4 +21,11 @@ export class SearchService {
         return this.httpClient.post<any>(`http://localhost:3000/keyword/store_keywords/?userId=${userId}&keyword=${keyword}`, tweets);
     }
 
+    /**
+     * Delete keyword and its results from history
+     */
+    deleteKeywordAndResults(keywordId : number) {
+        return this.httpClient.delete<any>(`http://localhost:3000/keyword/delete_keyword/?keywordId=${keywordId}`);
+    }
+
 }

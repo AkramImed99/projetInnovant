@@ -19,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AuthModule } from './auth/auth/auth.module';
 import { HistoryComponent } from './components/history/history.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { HistoryComponent } from './components/history/history.component';
     MatCardModule,
     MatFormFieldModule,
     MatTabsModule,
+    MatSnackBarModule,
     AuthModule
   ],
   providers: [],

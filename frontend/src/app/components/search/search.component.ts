@@ -49,6 +49,8 @@ export class SearchComponent implements OnInit {
       .searchData(this.searchForm.controls.searchField.value)
       .subscribe({
         next: response => {
+          console.log(response);
+          
           this.tweets = response;      
           
           // store keywords in db

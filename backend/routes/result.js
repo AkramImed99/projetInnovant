@@ -16,7 +16,7 @@ router.get('/results', function (req, res) {
 
         // get results of each keyword
 
-        const getResultsQuery = `SELECT keywords.keyword, keywords.search_date, results.id, results.tweet_content FROM keywords 
+        const getResultsQuery = `SELECT keywords.keyword, keywords.search_date, results.keyword_id, results.id, results.tweet_content FROM keywords 
                     INNER JOIN keywords_users ON keywords.id = keywords_users.keyword_id
                     INNER JOIN results ON keywords.id = results.keyword_id
                     WHERE keywords_users.user_id = ?`;

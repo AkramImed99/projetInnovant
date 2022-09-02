@@ -8,7 +8,9 @@
           {{ result[0].search_date | date: "dd/MM/yyyy" }}
         </mat-card-subtitle>
         <mat-card-actions>
-          <button mat-button>SUPPRIMER</button>
+          <button mat-button (click)="deleteSearch(result[0].keyword_id)">
+            SUPPRIMER
+          </button>
           <button mat-button>EXPORTER</button>
         </mat-card-actions>
       </mat-card>
