@@ -66,7 +66,7 @@ router.post('/login', async function (req, res, next) {
     }
 });
 
-/* Get users route */
+/* Get users */
 router.get('/users', (req, res) => {
     pool.getConnection((err, connection) => {
         if (err) throw err

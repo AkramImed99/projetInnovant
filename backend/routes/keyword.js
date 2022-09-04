@@ -88,6 +88,9 @@ router.post('/store_keywords', urlencodedParser, function (req, res) {
     }
 });
 
+/**
+ * Delete a search in histoy
+ */
 router.delete("/delete_keyword", (req, res) => {
     try {
         let keywordId = req.query.keywordId;

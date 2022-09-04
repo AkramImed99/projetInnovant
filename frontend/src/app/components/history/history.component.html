@@ -1,5 +1,7 @@
 <div class="history-cards">
+  <br />
   <h1>Historique des recherches</h1>
+  <br /><br />
   <div class="cards-list" *ngIf="results && groupedResults">
     <div class="card" *ngFor="let result of groupedResults">
       <mat-card>
@@ -11,10 +13,16 @@
           <button mat-button (click)="deleteSearch(result[0].keyword_id)">
             SUPPRIMER
           </button>
-          <button mat-button>EXPORTER</button>
+          <button
+            mat-button
+            (click)="exportData(result[0].keyword_id, result[0].keyword)"
+          >
+            EXPORTER
+          </button>
         </mat-card-actions>
       </mat-card>
       <br />
     </div>
   </div>
+  <br /><br /><br /><br /><br /><br />
 </div>

@@ -21,14 +21,26 @@ router.get('/results', function (req, res) {
                     INNER JOIN results ON keywords.id = results.keyword_id
                     WHERE keywords_users.user_id = ?`;
 
-
-
         con.query(getResultsQuery, userId, (err, result, fields) => {
 
             res.send({ status: 1, data: result });
         });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
 
+/**
+ * Get results by keyword
+ */
+router.get("/resultsByKeyword", (req, res) => {
+    try {
+        let keywordId = req.query.keywordId;
+        const getResultByKeywordQuery = `SELECT * FROM results WHERE keyword_id = ?`;
 
+        con.query(getResultByKeywordQuery, keywordId, (err, result, fields) => {
+            res.send({ status: 1, data: result });
+        });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

@@ -23,6 +23,7 @@
     "@angular/router": "~12.2.0",
     "@types/lodash": "^4.14.184",
     "angular-http-auth-interceptor": "^1.0.4",
+    "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
     "ngx-pagination": "^5.0.0",
     "rxjs": "~6.6.0",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@angular/cli": "~12.2.9",
     "@angular/compiler-cli": "~12.2.0",
+    "@types/file-saver": "^2.0.5",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
     "jasmine-core": "~3.8.0",
